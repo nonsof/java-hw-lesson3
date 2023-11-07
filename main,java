@@ -28,14 +28,19 @@ public class UserInputApp {
 
             String fileName = lastName + ".txt";
 
-            FileWriter writer = new FileWriter(fileName, true); // true для добавления данных в файл
-            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            File directory = new File("user_data");
+            if (!directory.exists()) {
+                directory.mkdir();
+            }
 
-            String data = lastName + firstName + middleName + dateFormat.format(birthDate) + " " + phoneNumber + gender;
+            File userFile = new File(directory, fileName);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(userFile, true));
 
-            bufferedWriter.write(data);
-            bufferedWriter.newLine();
-            bufferedWriter.close();
+            String data = lastName + firstName + middleName + " " + dateFormat.format(birthDate) + " " + phoneNumber + gender;
+
+            writer.write(data);
+            writer.newLine();
+            writer.close();
 
             System.out.println("Данные успешно записаны в файл " + fileName);
         } catch (IllegalArgumentException e) {
